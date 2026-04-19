@@ -19,6 +19,18 @@ def _():
     return pd, px
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    #Armani Cabey - A1204 Portfolio Dashboard
+    ##Stock Price analysis of 2023
+    The dashboard below illustrates 5 different companies throught 2023. Use the interactive slider to explore the companies from month 1 to 12.
+    - Line chart: Select a comapany to see its price over the 12 months📈
+    - Bar chart: Use the slider to compare the companies by month📊
+    """)
+    return
+
+
 @app.cell
 def _(pd):
     # Stock price data for five global companies
