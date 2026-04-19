@@ -12,6 +12,13 @@ def _():
 
 
 @app.cell
+async def _():
+    import micropip
+    await micropip.install('plotly')
+    return
+
+
+@app.cell
 def _():
     import pandas as pd
     import plotly.express as px
