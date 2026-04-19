@@ -62,5 +62,36 @@ def _(company, df, mo, px):
     return
 
 
+@app.cell
+def _(mo):
+    # Bar chart comparing all companies for a selected month
+    month = mo.ui.slider(
+        start=1, 
+        stop=12, 
+        value=1,
+        label="Select Month (1=Jan, 12=Dec)"
+    )
+    month
+    return (month,)
+
+
+@app.cell
+def _(df, mo, month, px):
+    # Bar chart for selected month
+    month_data = df.iloc[month.value - 1]
+    companies = ["Apple", "Tesla", "Amazon", "Nike", "Microsoft"]
+    prices = [month_data[c] for c in companies]
+
+    fig2 = px.bar(
+        x=companies,
+        y=prices,
+        title=f"Stock Price Comparison - Month {month.value} of 2023",
+        labels={"x": "Company", "y": "Price (USD)"},
+        color=companies
+    )
+    mo.ui.plotly(fig2)
+    return
+
+
 if __name__ == "__main__":
     app.run()
