@@ -147,6 +147,7 @@ def _(mo, pd, px):
 
     interests = mo.md("""
     ## Personal Interests
+    - Countries and travel
     - Finance and stock markets
     - Technology and Media
     - Mathematics
@@ -171,10 +172,21 @@ def _(mo, pd, px):
         hover_name="Country",
         text="Country",
         title="My Travel Map",
-        color_discrete_map={"Visited": "green", "Want to Visit": "blue"}
+        color_discrete_map={"Visited": "blue", "Want to Visit": "purple"}
     )
 
-    fig3.update_layout(geo=dict(showland=True, showcountries=True, projection_type="orthographic", center=dict(lat=30, lon=-20)))
+    fig3.update_layout(
+        geo=dict(
+            showland=True, 
+            showcountries=True, 
+            projection_type="orthographic",
+            landcolor="lightgreen",
+            oceancolor="lightblue",
+            showocean=True,
+            center=dict(lat=25, lon=-20)
+        ),
+        dragmode="orbit"
+    )
     fig3.update_traces(marker=dict(size=8))
 
     interests_tab = mo.vstack([interests, mo.ui.plotly(fig3)])
