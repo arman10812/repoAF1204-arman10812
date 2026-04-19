@@ -26,6 +26,93 @@ def _():
     return pd, px
 
 
+@app.cell
+def _(mo, pd, px):
+    about_me = mo.md("""
+    ## About me 
+    ## Armani Cabey
+    ### Accounting & Finance Undergraduate | Aspiring Financial Accountant or related financial roles.
+
+    **Summary:**
+    An Accounting and Finance Undergraduate currently learning data visualisation, python, and web development as a part of my 1204 module.
+
+    **Education:**
+    - BSc Accounting & Finance, City University (Sept 2025 - Present)
+    - Relevant Modules: Introduction to Data Science and AI Tools, Financial Accounting
+    """)
+
+    skills = mo.md("""
+    ## Skills 
+
+    **Hard Skills:**
+    - Python (pandas, plotly, marimo)
+    - Data visualisation
+    - GitHub & version control
+    - Interactive dashboard development
+
+    **Soft Skills:**
+    - Communication
+    - Problem Solving
+    - Quick Learner
+    - Teamwork
+    - Numerical/Data Analysis
+    """)
+
+    interests = mo.md("""
+    ## Personal Interests
+    - Countries and travel
+    - Finance and stock markets
+    - Technology and Media
+    - Mathematics
+    - Films and Music
+    - Gymn goer
+    """)
+
+    travel_data = {
+        "Country": ["France", "Jamaica", "Scotland", "Spain", "Portugal", "Greece", "Turkey", "USA", "Netherlands", "Trinidad"],
+        "Status": ["Visited", "Visited", "Visited", "Visited", "Want to Visit", "Want to Visit", "Want to Visit", "Want to Visit", "Want to Visit", "Want to Visit"],
+        "Lat": [46.2276, 18.1096, 56.4907, 40.4637, 39.3999, 39.0742, 38.9637, 37.0902, 52.1326, 10.6918],
+        "Lon": [2.2137, -77.2975, -4.2026, -3.7492, -8.2245, 21.8243, 35.2433, -95.7129, 5.2913, -61.2225]
+    }
+
+    travel_df = pd.DataFrame(travel_data)
+
+    fig3 = px.scatter_geo(
+        travel_df,
+        lat="Lat",
+        lon="Lon",
+        color="Status",
+        hover_name="Country",
+        text="Country",
+        title="My Travel Map",
+        color_discrete_map={"Visited": "blue", "Want to Visit": "purple"}
+    )
+
+    fig3.update_layout(
+        geo=dict(
+            showland=True, 
+            showcountries=True, 
+            projection_type="orthographic",
+            landcolor="lightgreen",
+            oceancolor="lightblue",
+            showocean=True,
+            center=dict(lat=25, lon=-20)
+        ),
+        dragmode="orbit"
+    )
+    fig3.update_traces(marker=dict(size=8))
+
+    interests_tab = mo.vstack([interests, mo.ui.plotly(fig3)])
+
+
+    mo.ui.tabs({
+        "👤 About Me": about_me,
+        "🛠️ Skills": skills,
+        "⭐ Personal Interests": interests_tab
+    })
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -117,93 +204,6 @@ def _(mo):
     mo.md(r"""
     ##
     """)
-    return
-
-
-@app.cell
-def _(mo, pd, px):
-    about_me = mo.md("""
-    ## About me 
-    ## Armani Cabey
-    ### Accounting & Finance Undergraduate | Aspiring Financial Accountant or related financial roles.
-
-    **Summary:**
-    An Accounting and Finance Undergraduate currently learning data visualisation, python, and web development as a part of my 1204 module.
-
-    **Education:**
-    - BSc Accounting & Finance, City University (Sept 2025 - Present)
-    - Relevant Modules: Introduction to Data Science and AI Tools, Financial Accounting
-    """)
-
-    skills = mo.md("""
-    ## Skills 
-
-    **Hard Skills:**
-    - Python (pandas, plotly, marimo)
-    - Data visualisation
-    - GitHub & version control
-    - Interactive dashboard development
-
-    **Soft Skills:**
-    - Communication
-    - Problem Solving
-    - Quick Learner
-    - Teamwork
-    - Numerical/Data Analysis
-    """)
-
-    interests = mo.md("""
-    ## Personal Interests
-    - Countries and travel
-    - Finance and stock markets
-    - Technology and Media
-    - Mathematics
-    - Films and Music
-    - Gymn goer
-    """)
-
-    travel_data = {
-        "Country": ["France", "Jamaica", "Scotland", "Spain", "Portugal", "Greece", "Turkey", "USA", "Netherlands", "Trinidad"],
-        "Status": ["Visited", "Visited", "Visited", "Visited", "Want to Visit", "Want to Visit", "Want to Visit", "Want to Visit", "Want to Visit", "Want to Visit"],
-        "Lat": [46.2276, 18.1096, 56.4907, 40.4637, 39.3999, 39.0742, 38.9637, 37.0902, 52.1326, 10.6918],
-        "Lon": [2.2137, -77.2975, -4.2026, -3.7492, -8.2245, 21.8243, 35.2433, -95.7129, 5.2913, -61.2225]
-    }
-
-    travel_df = pd.DataFrame(travel_data)
-
-    fig3 = px.scatter_geo(
-        travel_df,
-        lat="Lat",
-        lon="Lon",
-        color="Status",
-        hover_name="Country",
-        text="Country",
-        title="My Travel Map",
-        color_discrete_map={"Visited": "blue", "Want to Visit": "purple"}
-    )
-
-    fig3.update_layout(
-        geo=dict(
-            showland=True, 
-            showcountries=True, 
-            projection_type="orthographic",
-            landcolor="lightgreen",
-            oceancolor="lightblue",
-            showocean=True,
-            center=dict(lat=25, lon=-20)
-        ),
-        dragmode="orbit"
-    )
-    fig3.update_traces(marker=dict(size=8))
-
-    interests_tab = mo.vstack([interests, mo.ui.plotly(fig3)])
-
-
-    mo.ui.tabs({
-        "👤 About Me": about_me,
-        "🛠️ Skills": skills,
-        "⭐ Personal Interests": interests_tab
-    })
     return
 
 
